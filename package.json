@@ -1,6 +1,7 @@
 {
   "name": "react_app",
   "version": "0.1.0",
+  "homepage": "https://yagneshmanektech.github.io/mt-firstpractice",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
