@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./App.css";
 
 
@@ -6,16 +6,16 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      data: [],
       countRed: '0',
       countGreen: '0',
       countBlue: '0',
       edit: false,
       id: null,
       name: "",
-      color: "",
-      data: []
+      color: ""
     };
-    this.countColor = this.countColor.bind(this);
+    
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClear = this.handleClear.bind(this);
@@ -47,7 +47,12 @@ class App extends React.Component {
     this.setState(prevState => ({
       data: [...prevState.data,newdata ]
     }));
-    this.countColor();
+    
+    /* console.log(this.state.data);
+    console.log(newdata); */
+
+    let new_lists = [...this.state.data, newdata];
+    this.countColor(new_lists);
   };
 
   handleEditClick = (index) => {
@@ -58,7 +63,6 @@ class App extends React.Component {
       name : index.name,
       color : index.selectedcolor
     });
-    this.countColor();
   };
 
   onUpdateHandle= (event) => {
@@ -76,12 +80,15 @@ class App extends React.Component {
      this.setState({  
         edit: false
      });
+    let { data } = this.state;
+    this.countColor(data);
   }
 
   handleRemoveRow = (index) => {
     this.state.data.splice(this.state.data.indexOf(index), 1);
     this.setState({ data: this.state.data });
-    this.countColor();
+    let { data } = this.state;
+    this.countColor(data);
   };
 
   handleClear= (event) => {
@@ -92,13 +99,11 @@ class App extends React.Component {
     event.preventDefault(); 
   }
 
-  countColor = (index) => {
+  countColor = (colors) => {
     var redCount = 0;
     var blueCount = 0;
     var greenCount = 0;
-    console.log(index);
-    this.state.data.map((item) => {
-      
+    colors.map((item, index) => {
       if (item.selectedcolor === 'red') {            
           redCount ++;
       }
